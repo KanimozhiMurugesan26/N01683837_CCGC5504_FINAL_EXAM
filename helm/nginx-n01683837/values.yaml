@@ -1,4 +1,4 @@
-# Default values for nginx-n01683837.
+K# Default values for nginx-n01683837.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -50,10 +50,12 @@ securityContext: {}
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
-  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: LoadBalancer
-  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  service:
+  type: NodePort
   port: 80
+  nodePort: 30080
+ingress:
+  enabled: false
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
