@@ -4,6 +4,7 @@ on:
     branches: [ main ]
 permissions:
   contents: write   # allow commit back to repo
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,10 +30,10 @@ jobs:
       - name: Bump Helm values with new tag
         run: |
           sudo apt-get update && sudo apt-get install -y yq
-          yq -i '.image.repository=strenv(IMAGE)' helm/nginx-n01683837/values.yaml
-          yq -i '.image.tag=strenv(TAG)'       helm/nginx-n01683837/values.yaml
+          yq -y -i '.image.repository=strenv(IMAGE)' helm/nginx-n01683837/values.yaml
+          yq -y -i '.image.tag=strenv(TAG)'       helm/nginx-n01683837/values.yaml
           git config user.name "ci-bot"
           git config user.email "ci@example.com"
           git add helm/nginx-n01683837/values.yaml
-          git commit -m "chore: bump image to ${IMAGE}:${TAG}"
+          git commit -m "chore: bump image to ${IMAGE}:${TAG}" || echo "No changes to commit"
           git push
