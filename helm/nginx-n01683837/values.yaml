@@ -10,7 +10,7 @@ image:
   image:
   repository: kanimozhimurugesan197/nginx-n01683837
   pullPolicy: IfNotPresent
-  tag: "3411f4346a2a58bfd82d2cad6fd14cfa122b686a"
+  tag: "de39dd6bc4a59f7354319d3bfcabe05ecba3b4f4"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
