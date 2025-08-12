@@ -27,11 +27,15 @@ jobs:
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
           echo "TAG=$TAG" >> $GITHUB_ENV
 
-      - name: Bump Helm values with new tag
+      - name: Bump Helm values with new tag (sed)
         run: |
-          sudo apt-get update && sudo apt-get install -y yq
-          yq -y -i '.image.repository=strenv(IMAGE)' helm/nginx-n01683837/values.yaml
-          yq -y -i '.image.tag=strenv(TAG)'       helm/nginx-n01683837/values.yaml
+          # IMAGE and TAG come from previous step via GITHUB_ENV
+          echo "Using image: ${IMAGE} tag: ${TAG}"
+          # Update 'repository:' line
+          sed -i "s|^\(\s*repository:\s*\).*|\1${IMAGE}|" helm/nginx-n01683837/values.yaml
+          # Update 'tag:' line
+          sed -i "s|^\(\s*tag:\s*\).*|\1\"${TAG}\"|"       helm/nginx-n01683837/values.yaml
+
           git config user.name "ci-bot"
           git config user.email "ci@example.com"
           git add helm/nginx-n01683837/values.yaml
